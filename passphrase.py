@@ -2,51 +2,57 @@
 import string
 def play_pass(s, n):
 
-    alphabets = list(string.ascii_uppercase)
-    digits = list(string.digits)
+    alphabets = string.ascii_uppercase
+    alphabets = list(alphabets)
     specialChar = list(string.punctuation)
     splitWord = s.split(" ")
     newWord = ""
     passList = []
 
-    print(len(alphabets))
-    print("---")
     # Check each word through
     for word in splitWord:
 
         # Check each character from the word
         for letter in word:
 
-            if letter in alphabets:
+            # Check if character is in alphabets but not numeric
+            if letter in alphabets and not letter.isnumeric():
                 letterIndex = alphabets.index(letter)
-                print(letterIndex+n)
-                newWord += alphabets[letterIndex+n]
+                index = letterIndex + n
 
-            elif letter.isnumeric() and letter in digits:
+                # If leap is more than the lenght of the list,
+                # start from the beginning of the list
+                if index >= len(alphabets):
+                    outOfBounds = index - len(alphabets)
+                    newWord += alphabets[outOfBounds]
+                else:
+                    newWord += alphabets[index]
+
+            # If numeric replace each digit by its complement to 9
+            elif letter.isnumeric():
                 diff = 9 - int(letter)
                 newWord += str(diff)
 
+            # Keep such as non alphabetic and non digit characters
             elif letter in specialChar:
                 newWord += letter
 
         passList.append(newWord)
+        # Reset newWord once appended to list
         newWord = ""
 
-    newItem = ""
-    newList = []
+    password = ""
 
-    for item in passList:
-        count = 1
-        for i in item:
-            if count %2 == 0:
-                newItem += i.lower()
-            else:
-                newItem += i
-            count += 1
-        newList.append(newItem)
-        newItem = ""
+    # Lowercase every odd number of characters
+    passString = " ".join(passList)
+    count = 0
+    for i in passString:
+        if count %2 == 0:
+            password += i
+        else:
+            password += i.lower()         
+        count += 1
 
-    password = " ".join(list(filter(None,newList)))
     return password[::-1]
             
 

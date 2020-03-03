@@ -2,8 +2,7 @@
 import string
 def play_pass(s, n):
 
-    alphabets = string.ascii_uppercase
-    alphabets = list(alphabets)
+    alphabets = list(string.ascii_uppercase)
     specialChar = list(string.punctuation)
     splitWord = s.split(" ")
     newWord = ""
@@ -23,8 +22,7 @@ def play_pass(s, n):
                 # If leap is more than the lenght of the list,
                 # start from the beginning of the list
                 if index >= len(alphabets):
-                    outOfBounds = index - len(alphabets)
-                    newWord += alphabets[outOfBounds]
+                    newWord += alphabets[index - len(alphabets)]
                 else:
                     newWord += alphabets[index]
 
